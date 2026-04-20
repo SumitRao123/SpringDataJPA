@@ -63,8 +63,7 @@ class DemoApplicationTests {
 				status("unbooked").build();
 		Appointment appointment1 = appointmentService.createAppointment(appointment,1L,1L);
 
-		Appointment appointment2 = appointmentService.reassignAppointment(appointment1.getId(),2
-				L);
+		Appointment appointment2 = appointmentService.reassignAppointment(appointment1.getId(),2L);
 
 	}
 
