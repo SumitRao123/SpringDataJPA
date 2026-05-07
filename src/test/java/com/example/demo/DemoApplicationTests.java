@@ -9,8 +9,10 @@ import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Insurance;
 import com.example.demo.entity.Type.GenderType;
 import com.example.demo.entity.Type.bloodGroupType;
+import com.example.demo.entity.UserAuthDetails;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.InsuranceService;
+import com.example.demo.service.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +31,9 @@ class DemoApplicationTests {
 
 	@Autowired
 	public AppointmentService appointmentService;
+
+	@Autowired
+	public JWTService jwtService;
 	 
 	@Test
 	void contextLoads() {
@@ -67,5 +72,17 @@ class DemoApplicationTests {
 
 	}
 
+    @Test
+	public void TestApp1(){
+		UserAuthDetails userAuthDetails = new UserAuthDetails();
+		userAuthDetails.setId(1L);
+		userAuthDetails.setPassword("ppass");
+		userAuthDetails.setUsername("Sumit");
+		userAuthDetails.setRole("ROLE_USER");
+		String token = jwtService.createToken(userAuthDetails);
+		System.out.println("created token : " + token);
+		Long val = jwtService.generateUserFromToken(token);
+		System.out.println(val);
 
+	}
 }

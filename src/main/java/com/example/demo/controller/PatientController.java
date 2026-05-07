@@ -16,6 +16,11 @@ public class PatientController {
    
     @Autowired
     public PatientRepository patientRepo;
+
+    @GetMapping("/greet")
+    public String getValue(){
+        return "Hello";
+    }
      
     @GetMapping("/")
      public List<Patient> findAll(){
