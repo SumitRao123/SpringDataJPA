@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.filters.JwtAuthFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class WebSecurityConfig {
 
     @Autowired
     JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    Oauth2SuccessHandler oauth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -32,7 +36,10 @@ public class WebSecurityConfig {
                         requestMatchers("/api/").hasRole("USER"))
                 .httpBasic(Customizer.withDefaults())
                 .csrf((csrf)->csrf.disable()).sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(Oauth2-> Oauth2.failureHandler(((request, response, exception) -> {
+                     log.error("Oauth2 Error : {}",exception.getMessage());
+                })).successHandler(oauth2SuccessHandler));
         return httpSecurity.build();
     }
 
