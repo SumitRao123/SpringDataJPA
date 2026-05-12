@@ -1,8 +1,8 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 175182065525-bi2vvkhm67gi82vasnvuptslc210mk9r.apps.googleusercontent.com
-            client-secret: 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
+#spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 175182065525-bi2vvkhm67gi82vasnvuptslc210mk9r.apps.googleusercontent.com
+#            client-secret: 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
